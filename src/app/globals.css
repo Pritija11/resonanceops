@@ -1,26 +1,184 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  --bg: #f2fbfb;
+  --bg-alt: #e6f6f6;
+  --surface: #ffffff;
+  --surface-tint: #eef9f9;
+  --border: #d2e8e8;
+  --border-strong: #b7d8d8;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --fg: #0b1f20;
+  --fg-muted: #4e686a;
+  --fg-faint: #80999b;
+
+  --primary: #0092a0;
+  --primary-dark: #00727d;
+  --primary-soft: #d7f3f5;
+  --on-primary: #ffffff;
+
+  --success: #138a5f;
+  --danger: #d23b4c;
+  --warning: #c17d00;
+
+  --accent-pink: #d12f87;
+  --accent-violet: #6c4de0;
+  --accent-amber: #c17d00;
+  --accent-blue: #1f78cc;
+  --accent-lime: #6b9a00;
+
   --font-sans: var(--font-geist-sans);
+  --font-display: var(--font-space-grotesk);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@theme inline {
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --font-sans: var(--font-geist-sans);
+  --font-display: var(--font-space-grotesk);
+  --font-mono: var(--font-geist-mono);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
   }
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+::selection {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Dot-field hero background, Arize-style scattered signal nodes */
+.dot-field {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    color-mix(in srgb, var(--primary) 55%, transparent) 1.4px,
+    transparent 1.4px
+  );
+  background-size: 34px 34px;
+  mask-image: radial-gradient(60% 70% at 72% 35%, black 0%, transparent 75%);
+  pointer-events: none;
+}
+
+.grid-field {
+  background-image: linear-gradient(
+      to right,
+      color-mix(in srgb, var(--border-strong) 55%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--border-strong) 55%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 32px 32px;
+}
+
+/* Category tag chips used in vertical-rail feature sections */
+.tag-cyan {
+  background: color-mix(in srgb, var(--primary) 16%, transparent);
+  color: var(--primary);
+  border-color: color-mix(in srgb, var(--primary) 32%, transparent);
+}
+.tag-violet {
+  background: color-mix(in srgb, var(--accent-violet) 18%, transparent);
+  color: var(--accent-violet);
+  border-color: color-mix(in srgb, var(--accent-violet) 34%, transparent);
+}
+.tag-amber {
+  background: color-mix(in srgb, var(--accent-amber) 18%, transparent);
+  color: var(--accent-amber);
+  border-color: color-mix(in srgb, var(--accent-amber) 34%, transparent);
+}
+.tag-pink {
+  background: color-mix(in srgb, var(--accent-pink) 16%, transparent);
+  color: var(--accent-pink);
+  border-color: color-mix(in srgb, var(--accent-pink) 32%, transparent);
+}
+
+/* Status pills used inside mock product UI */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border-radius: 999px;
+  padding: 2px 9px;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+.pill-success {
+  background: color-mix(in srgb, var(--success) 16%, transparent);
+  color: var(--success);
+}
+.pill-warning {
+  background: color-mix(in srgb, var(--warning) 18%, transparent);
+  color: var(--warning);
+}
+.pill-danger {
+  background: color-mix(in srgb, var(--danger) 16%, transparent);
+  color: var(--danger);
+}
+.pill-neutral {
+  background: var(--surface-tint);
+  color: var(--fg-muted);
+}
+
+/* Vibrant gradient band used behind floating product panels */
+.signal-band {
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--primary) 70%, #6a3bff) 0%,
+    var(--primary) 50%,
+    color-mix(in srgb, var(--primary) 55%, #042b2e) 100%
+  );
+}
+
+/* Highlighter-marker effect for emphasized headline words */
+.mark-cyan {
+  background: var(--primary);
+  color: var(--on-primary);
+  padding: 0 0.12em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
 }
