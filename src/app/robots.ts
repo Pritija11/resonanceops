@@ -9,3 +9,5 @@ export default function robots(): MetadataRoute.Robots {
     sitemap: "https://resonanceops.ltd/sitemap.xml",
   };
 }
+
+export const dynamic = "force-static";
